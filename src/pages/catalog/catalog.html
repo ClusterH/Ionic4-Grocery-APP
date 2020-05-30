@@ -1,0 +1,73 @@
+<ion-header>
+    <ion-navbar color="white">
+        <ion-title>{{data.pagetitle}}</ion-title>
+        <ion-buttons end>
+            <small-cart backText="{{data.pagetitle}}"></small-cart>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <div class="align-center" *ngIf="!data" style='padding-top:20px;'>
+        <ion-spinner></ion-spinner>
+    </div>
+    <div *ngIf="data">
+        <div class="sort-switcher">
+            <div class="sort-switch" *ngFor="let item of sort" [class.active]="item.selected" (tap)="setSort(item.slug)">
+                {{item.title}}
+            </div>
+        </div>
+        <div id="filter-cats" *ngIf="data.id == 10">
+            <h4 class="text-center">Подкатегории:</h4>
+            <button ion-button class="button button-small button-energized" [class.active]="resourceShow == 0" (click)="resourceShow = 0">Показать все</button>
+            <button ion-button class="button button-small button-energized" [class.active]="resourceShow == 12" (click)="resourceShow = 12">Запеченные гунканы</button>
+            <button ion-button class="button button-small button-energized" [class.active]="resourceShow == 11" (click)="resourceShow = 11">Спайси гунканы</button>
+        </div>
+        <div id="filter-cats" *ngIf="data.id == 13">
+            <h4 class="text-center">Подкатегории:</h4>
+            <button ion-button class="button button-small button-energized" [class.active]="resourceShow == 0" (click)="resourceShow = 0">Показать все</button>
+            <button ion-button class="button button-small button-energized" [class.active]="resourceShow == 14" (click)="resourceShow = 14">Запеченные</button>
+            <button ion-button class="button button-small button-energized" [class.active]="resourceShow == 15" (click)="resourceShow = 15">Большие</button>
+            <button ion-button class="button button-small button-energized" [class.active]="resourceShow == 16" (click)="resourceShow = 16">Малые</button>
+            <button ion-button class="button button-small button-energized" [class.active]="resourceShow == 164" (click)="resourceShow = 164">Темпурные</button>
+        </div>
+        <ion-list>
+            <div *ngFor="let resource of data.resources | sortCatalog : activeSort : (activeSort == 'id' ? -1 : 1)" (click)="catalogItem(resource,data.pagetitle)">
+                <ion-item *ngIf="resourceShow == resource.parent || resourceShow == 0">
+                    <div class="resource__item">
+                        <div class="row">
+                            <div class="col-33">
+                                <div class="resource__item__img">
+                                    <img [src]="API.server + resource.tv_image" alt="{{resource.pagetitle}}">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="resource__item__content">
+                                    <div class="resource__item__content__top top4">
+                                        <h3>{{resource.pagetitle}}</h3>
+                                        <span class="resource__item__price">{{resource.tv_price | number}}</span>
+                                        <div *ngIf="resource.tv_weight" class="resource__item__weight marT2">({{resource.tv_weight}})</div>
+                                    </div>
+                                    <div class="resource__item__intro marT2" [innerHTML]="resource.description"></div>
+                                    <div class="resource__item__btns" (click)="$event.stopPropagation()" >
+                                        <ng-container *ngIf="Cart.getCountItem(resource.id) > 0">
+                                            <span class="resource__item__btn minus" [class.activated]="resource.minus" (tap)="Cart.removeItem(resource.id)" (touchstart)="resource.minus = true" (touchend)="resource.minus = false">
+                                                <ion-icon name="ios-remove-outline"></ion-icon>
+                                            </span>
+                                            {{Cart.items[resource.id]}}
+                                            <span class="resource__item__btn plus" [class.activated]="resource.plus" (tap)="Cart.addItem(resource.id)" (touchstart)="resource.plus = true" (touchend)="resource.plus = false">
+                                                <ion-icon name="ios-add-outline"></ion-icon>
+                                            </span>
+                                        </ng-container>
+                                        <button class="button marB5" *ngIf="Cart.getCountItem(resource.id) == 0" (tap)="Cart.addItem(resource.id); resource.minus = false">
+                                          В&nbsp;корзину
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ion-item>
+            </div>
+        </ion-list>
+    </div>
+</ion-content>

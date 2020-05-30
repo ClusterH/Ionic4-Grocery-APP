@@ -1,0 +1,105 @@
+<ion-header>
+    <ion-navbar color="white">
+        <ion-title>Оформление заказа</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <ion-list style="margin-bottom:0px;" *ngIf="!onlinePaymentFlag">
+        <!-- <ion-item class="wrap-order-item">
+            <ion-label floating>
+                Имя
+            </ion-label>
+            <ion-input [(ngModel)]="data.name.value"></ion-input>
+        </ion-item> -->
+
+
+
+        <!-- <ion-grid>
+            <ion-row>
+                <ion-col col-6>
+                    <ion-item class="wrap-order-item">
+                        <ion-label floating>Имя</ion-label>
+                        <ion-input [(ngModel)]="data.name.value"></ion-input>
+                    </ion-item>
+                </ion-col>
+                <ion-col col-6>
+                    <ion-item class="wrap-order-item">
+                        <ion-label floating>Количество персон</ion-label>
+                        <ion-input [(ngModel)]="data.noPerson.value"></ion-input>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+        </ion-grid> -->
+        <ion-item class="clearfix"></ion-item>
+        <ion-item class="wrap-order-item order-item-left">
+            <ion-label floating>Имя</ion-label>
+            <ion-input [(ngModel)]="data.name.value" ></ion-input>
+        </ion-item>
+        <ion-item class="wrap-order-item order-item-right">
+            <ion-label floating>Количество персон</ion-label>
+            <ion-input [(ngModel)]="data.noPerson.value" type="number"></ion-input>
+        </ion-item>
+        <ion-item class="clearfix"></ion-item>
+
+
+        <ion-item class="wrap-order-item">
+            <ion-label floating>Телефон</ion-label>
+            <ion-input type="tel" [textMask]="{mask: mask}" [(ngModel)]="data.phone.value"></ion-input>
+        </ion-item>
+        <ion-item class="wrap-order-item">
+            <ion-label>Город</ion-label>
+            <ion-select [(ngModel)]="data.city.value" cancelText="Отмена" interface="action-sheet">
+                <ion-option *ngFor="let item of this.City.list" [value]="item.index">{{item.title.replace('г. ', '')}}
+                </ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item class="wrap-order-item">
+            <ion-label floating>Улица</ion-label>
+            <ion-input [(ngModel)]="data.street.value"></ion-input>
+        </ion-item>
+        <ion-item class="clearfix"></ion-item>
+        <ion-item class="wrap-order-item order-item-left">
+            <ion-label floating>Дом/Корпус</ion-label>
+            <ion-input [(ngModel)]="data.house.value"></ion-input>
+        </ion-item>
+        <ion-item class="wrap-order-item order-item-right">
+            <ion-label floating>Подъезд</ion-label>
+            <ion-input [(ngModel)]="data.enter.value"></ion-input>
+        </ion-item>
+        <ion-item class="clearfix"></ion-item>
+        <ion-item class="wrap-order-item order-item-left">
+            <ion-label floating>Этаж</ion-label>
+            <ion-input [(ngModel)]="data.floor.value" type="tel"></ion-input>
+        </ion-item>
+        <ion-item class="wrap-order-item order-item-right">
+            <ion-label floating>Кв-ра/Офис</ion-label>
+            <ion-input [(ngModel)]="data.flat.value"></ion-input>
+        </ion-item>
+        <ion-item class="clearfix"></ion-item>
+        <ion-item class="wrap-order-item">
+            <ion-label>Способ оплаты</ion-label>
+            <ion-select [(ngModel)]="data.pay.value" cancelText="Отмена" interface="action-sheet">
+                <ion-option value="onlinePayment">Картой онлайн</ion-option>
+                <ion-option value="cash">Наличные</ion-option>
+                <ion-option value="card">Картой курьеру</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item class="wrap-order-item" *ngIf="data.pay.value != 'card' && data.pay.value != 'onlinePayment'">
+            <ion-label fixed>Сдача с</ion-label>
+            <ion-input type="text" [(ngModel)]="data.change.value" type="tel" placeholder="5000"></ion-input>
+        </ion-item>
+        <ion-item class="wrap-order-item mrg25B">
+            <ion-label floating>Комментарий</ion-label>
+            <ion-textarea fz-elastic rows="1" [(ngModel)]="data.comment.value"></ion-textarea>
+        </ion-item>
+    </ion-list>
+ 
+    <div *ngIf="onlinePaymentFlag">
+        <iframe [src]="url" name="iframe_a" style="position:fixed; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none; margin:0; padding:0; overflow:hidden; z-index:999999;"></iframe>
+    </div>
+</ion-content>
+<ion-footer class="order-footer">
+    <button ion-button full class="button button-energized" style="margin-bottom:0px;" (tap)="send()">
+        Отправить
+    </button>
+</ion-footer>

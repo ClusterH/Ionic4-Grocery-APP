@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "163960703231",
+    "firebase_url": "https://japancity-a22bc.firebaseio.com",
+    "project_id": "japancity-a22bc",
+    "storage_bucket": "japancity-a22bc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:163960703231:android:28a0633be58d99fc",
+        "android_client_info": {
+          "package_name": "com.ionicframework.japancity2883198"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "163960703231-4cbh8vhn6dbslp3nn7d3e3cf8ogd0rbk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBa24qmxizJ3RUIg1F-VayKQimKkvcZ-g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,20 @@
+<ion-menu [content]="content">
+    <ion-content>
+        <ion-list>
+            <button menuClose ion-item color='white' *ngFor="let p of pages" (click)="openPage(p)">
+                <i class="{{p.icon}}"></i>{{p.title}}
+            </button>
+            <button ion-item color='white' (tap)="callOrder()">
+                <i class="icon-phone"></i>Заказ по телефону
+            </button>
+        </ion-list>
+    </ion-content>
+    <div class="bar bar-footer">
+        <div class="city-select font-default" style="white-space: nowrap;" (click)="selectCity()">
+            <i class="icon-placeark" style="margin-right:7px;"></i><span style="font-size:14px;display:inline-block;width:165px;">{{City.activeItem.title}}</span><ion-icon name="md-arrow-dropdown" color="main"></ion-icon>
+        </div>
+    </div>
+</ion-menu>
+
+<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>

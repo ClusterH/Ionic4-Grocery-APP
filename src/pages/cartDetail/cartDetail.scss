@@ -1,0 +1,40 @@
+page-cartDetail {
+    .label-md {
+        margin-bottom: 0px;
+    }
+    .resource__item__intro {
+        margin-top: -1px;
+    }
+    .resource__item__content h3 {
+        line-height: 1em;
+        max-width: 72%;
+        margin: 0;
+        text-align: justify;
+    }
+    .marB5 {
+        margin-bottom: 5px;
+    }
+    .top4 {
+        top: 4px;
+    }
+    .marT2 {
+        margin-top: 2px;
+    }
+    .btn0Count {
+        font-size: 7px;
+        font-weight: bold;
+        color: #fff;
+        line-height: 20px;
+        text-transform: uppercase;
+        height: 24px;
+        min-height: 0;
+        padding: 0 22px;
+        margin-top: 10px;
+        border-radius: 24px;
+        background: #ff9702;
+    }
+
+    ion-content img {
+        width: 100%;
+    }
+}

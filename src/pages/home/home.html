@@ -1,0 +1,30 @@
+<ion-header>
+    <ion-navbar color="white">
+        <button ion-button menuToggle color='main' class='icon-slide-menu'></button>
+        <ion-title>Меню</ion-title>
+        <ion-buttons end>
+            <small-cart backText='Меню'></small-cart>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <div class="align-center" *ngIf="!ready" style='padding-top:20px;'>
+        <ion-spinner></ion-spinner>
+    </div>
+    <ion-list class='list-categories' [virtualScroll]="data" approxItemHeight="120px">
+        <ion-item class="clear-item" *virtualItem="let item" [id]="'category' + item.id">
+            <div class="wrap-category">
+                <div class="category" [style.backgroundColor]="'#000'" [style.backgroundImage]="'url(assets/img/categories/' + item.id + '.jpg)'" (tap)="openCatalog(item.id)">
+                    <div class='wrap-title'>
+                        <div class='title'>
+                            {{item.pagetitle}}
+                        </div>
+                        <div class='subtitle'>
+                            {{item.introtext}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ion-item>
+    </ion-list>
+</ion-content>

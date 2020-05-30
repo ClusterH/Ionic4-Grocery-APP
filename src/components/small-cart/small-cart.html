@@ -1,0 +1,5 @@
+<button ion-button icon-only small color="white" style="contain:none;" (tap)="openCart()">
+    <a class="button button-icon icon-cart button-cart" style="font-size:38px;">
+        <ins class="cart_total" *ngIf="Cart.total > 0">{{Cart.total}}</ins>
+    </a>
+</button>

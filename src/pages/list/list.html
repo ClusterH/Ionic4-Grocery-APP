@@ -1,0 +1,23 @@
+<ion-header>
+    <ion-navbar color="white">
+        <button ion-button menuToggle color='main' class='icon-slide-menu'></button>
+        <ion-title>Акции</ion-title>
+        <ion-buttons end>
+            <small-cart backText='Акции'></small-cart>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <div class="align-center" *ngIf="!data" style='padding-top:20px;'>
+        <ion-spinner></ion-spinner>
+    </div>
+    <ion-list class="shares">
+        <ion-item *ngFor="let item of data" class="pad0A">
+            <div class="card">
+                <div class="item item-text-wrap">
+                    <img src="{{item.img}}" alt="">
+                </div>
+            </div>
+        </ion-item>
+    </ion-list>
+</ion-content>

@@ -1,0 +1,135 @@
+<ion-header>
+    <ion-navbar color="white">
+        <ion-title>Корзина</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <div class="align-center" *ngIf="!ready" style='padding-top:20px;'>
+        <ion-spinner></ion-spinner>
+    </div>
+    <div *ngIf="ready">
+        <div class="cart-empty" *ngIf="Cart.count == 0">
+            <ion-icon name="ios-sad-outline" color="main"></ion-icon>
+            <div class="text">
+                Ваша корзина пуста
+            </div>
+        </div>
+        <ion-list>
+            <ng-container *ngIf="!Cart.isCartEmpty">
+                <ion-item class="resources_list resources_list__cart" *ngIf="Cart.DiscountItem; let item">
+                    <div class="resource__item">
+                        <div class="row">
+                            <div class="col-33 animated">
+                                <div class="resource__item__img">
+                                    <img [src]="API.server + item.item.tv_image" alt="{{item.item.pagetitle}}">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="resource__item__content">
+                                    <div class="resource__item__content__top">
+                                        <h3>{{item.item.pagetitle}}</h3>
+
+                                        <span *ngIf="item.count === 0">
+                                            <span class="resource__item__price">{{item.discountPrice | number}}</span> <br/>
+                                            <span class="resource__item__price resource__item__undiscountPrice">{{item.price | number}}</span>
+                                        </span>
+
+                                        <span *ngIf="item.count !== 0">
+                                            <span class="resource__item__price">{{item.count * item.discountPrice | number}}</span> <br/>
+                                            <span class="resource__item__price resource__item__undiscountPrice">{{item.count * item.price | number}}</span>
+                                        </span>
+                                        <span *ngIf="item.item.tv_weight" class="resource__item__weight">({{item.item.tv_weight}})</span>
+                                    </div>
+                                    <div class="resource__item__intro" [innerHTML]="item.item.description"></div>
+                                    <div class="resource__item__btns">
+                                        <div *ngIf="item.count > 0">
+                                            <span class="resource__item__btn minus" [class.activated]="item.minus" (tap)="Cart.addDiscountedItem(-1)" (touchstart)="item.minus = true" (touchend)="item.minus = false">
+                                                <ion-icon name="ios-remove-outline"></ion-icon>
+                                            </span>
+                                            {{item.count}}
+                                            <span class="resource__item__btn plus" [class.activated]="item.plus" (tap)="Cart.addDiscountedItem(1)" (touchstart)="item.plus = true" (touchend)="item.plus = false">
+                                                <ion-icon name="ios-add-outline"></ion-icon>
+                                            </span>
+                                        </div>
+                                        <button class="button" *ngIf="item.count == 0" (tap)="Cart.addDiscountedItem(1)">
+                                            В&nbsp;корзину
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ion-item>
+            </ng-container>
+
+            <ion-item-sliding *ngFor="let item of Cart.list">
+                <ion-item class="resources_list resources_list__cart">
+                    <div class="resource__item">
+                        <div class="row">
+                            <div class="col-33 animated">
+                                <div class="resource__item__img">
+                                    <img [src]="API.server + item.item.tv_image" alt="{{item.item.pagetitle}}">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="resource__item__content">
+                                    <div class="resource__item__content__top">
+                                        <h3>{{item.item.pagetitle}}</h3>
+                                        <span class="resource__item__price">{{item.count * item.item.tv_price | number}}</span>
+                                        <span *ngIf="item.item.tv_weight" class="resource__item__weight">({{item.item.tv_weight}})</span>
+                                    </div>
+                                    <div class="resource__item__intro" [innerHTML]="item.item.description"></div>
+                                    <div class="resource__item__btns">
+                                        <div *ngIf="item.count > 0">
+                                            <span class="resource__item__btn minus" [class.activated]="item.minus" (tap)="Cart.removeItem(item.item.id, false)" (touchstart)="item.minus = true" (touchend)="item.minus = false">
+                                                <ion-icon name="ios-remove-outline"></ion-icon>
+                                            </span>
+                                            {{item.count}}
+                                            <span class="resource__item__btn plus" [class.activated]="item.plus" (tap)="Cart.addItem(item.item.id)" (touchstart)="item.plus = true" (touchend)="item.plus = false">
+                                                <ion-icon name="ios-add-outline"></ion-icon>
+                                            </span>
+                                        </div>
+                                        <button class="button" *ngIf="item.count == 0" (tap)="Cart.addItem(item.item.id)">
+                                            В&nbsp;корзину
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ion-item>
+                <ion-item-options side="right">
+                    <button ion-button color="danger" (tap)="Cart.deleteItem(item.item.id, item.count)">
+                        <ion-icon name="trash" style="font-size:44px;"></ion-icon>
+                        Удалить
+                    </button>
+                </ion-item-options>
+            </ion-item-sliding>
+        </ion-list>
+    </div>
+</ion-content>
+<ion-footer>
+    <div class="checkout-discount" *ngIf="Cart.discount_msg">
+        {{Cart.discount_msg}}
+    </div>
+    <div class="checkout-total" *ngIf="Cart.total > 0">
+        Сумма заказа <span class="checkout-total__summ">{{Cart.total}}</span>
+    </div>
+    <div class="checkout-minimal" *ngIf="Cart.total < minimalOrderPrice">
+        Минимальная сумма заказа <span class="checkout-minimal__summ">{{minimalOrderPrice}}</span>
+    </div>
+    <ion-grid *ngIf="Cart.total > 0">
+        <ion-row>
+            <ion-col col-6>
+                <button ion-button full outline class="button button-outline button-light invert-button-clear" style="border-width:1px;border-color:#ddd;" (tap)="Cart.clear()">
+                    Очистить
+                </button>
+            </ion-col>
+            <ion-col col-6>
+                <button ion-button full class="button button-energized invert-button-checkout" (tap)="openOrder()" [disabled]="!canOpenOrder">
+                    Продолжить
+                </button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-footer>

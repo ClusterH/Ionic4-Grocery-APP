@@ -1,0 +1,48 @@
+<ion-header>
+    <ion-navbar color="white">
+        <button ion-button menuToggle color='main' class='icon-slide-menu'></button>
+        <ion-title>История заказов</ion-title>
+        <ion-buttons end>
+            <small-cart backText="История заказов"></small-cart>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <div class="cart-empty" *ngIf="list.length == 0">
+        <ion-icon name="ios-sad-outline" color="main"></ion-icon>
+        <div class="text">
+            У Вас пока нет истории заказов
+        </div>
+    </div>
+    <ion-list>
+        <ion-item *ngFor="let item of list" class="resources_list">
+            <ion-card style="margin-right:0px;width:auto;">
+                <ion-card-header style="background:#f5f5f5;">
+                    <div class="history-item__date">{{item.date | date:'dd.MM.yyyy в HH:mm'}}</div>
+                    <div class="history-item__price">
+                        <label>Стоимость: </label><span>{{item.cart.total}} руб.</span>
+                    </div>
+                </ion-card-header>
+                <ion-card-content style="padding:0px;">
+                    <ion-grid style="color:#444;">
+                        <ion-row *ngFor="let i of item.items" style="padding:5px;">
+                            <ion-col col-6 class="hide-text">
+                                <b>{{i.name}}</b>
+                            </ion-col>
+                            <ion-col col-2>
+                                {{i.length}} шт.
+                            </ion-col>
+                            <ion-col col-4 style="text-align:right;">
+                                {{i.length * i.price}} руб.
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                    <div class="item item-divider item-divider__footer">
+                        <button ion-button style="border-radius:0px;" (click)="duplicateOrder(item)" class="button button-full button-energized duplicate-order">Повторить заказ</button>
+                    </div>
+                </ion-card-content>
+            </ion-card>
+        </ion-item>
+    </ion-list>
+    
+</ion-content>

@@ -1,0 +1,11 @@
+.resource__item__content h3{
+    line-height: 1em;
+    max-width: 100%;
+    margin: 0;
+}
+
+.resource__item__undiscountPrice {
+    text-decoration: line-through;
+    color: red;
+    font-size: 14px;
+}
